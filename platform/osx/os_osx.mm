@@ -306,6 +306,8 @@ static NSCursor *cursorFromSelector(SEL selector, SEL fallback = nil) {
 
 	[OS_OSX::singleton->window_object setContentMinSize:NSMakeSize(0, 0)];
 	[OS_OSX::singleton->window_object setContentMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+	// Force window resize event.
+	[self windowDidResize:notification];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification {
@@ -325,6 +327,9 @@ static NSCursor *cursorFromSelector(SEL selector, SEL fallback = nil) {
 
 	if (OS_OSX::singleton->on_top)
 		[OS_OSX::singleton->window_object setLevel:NSFloatingWindowLevel];
+
+	// Force window resize event.
+	[self windowDidResize:notification];
 }
 
 - (void)windowDidChangeBackingProperties:(NSNotification *)notification {
@@ -2280,14 +2285,26 @@ String OS_OSX::get_cache_path() const {
 }
 
 String OS_OSX::get_bundle_resource_dir() const {
-	NSBundle *main = [NSBundle mainBundle];
-	NSString *resourcePath = [main resourcePath];
-
-	char *utfs = strdup([resourcePath UTF8String]);
 	String ret;
-	ret.parse_utf8(utfs);
-	free(utfs);
 
+	NSBundle *main = [NSBundle mainBundle];
+	if (main) {
+		NSString *resourcePath = [main resourcePath];
+		ret.parse_utf8([resourcePath UTF8String]);
+	}
+	return ret;
+}
+
+String OS_OSX::get_bundle_icon_path() const {
+	String ret;
+
+	NSBundle *main = [NSBundle mainBundle];
+	if (main) {
+		NSString *iconPath = [[main infoDictionary] objectForKey:@"CFBundleIconFile"];
+		if (iconPath) {
+			ret.parse_utf8([iconPath UTF8String]);
+		}
+	}
 	return ret;
 }
 
@@ -2393,7 +2410,7 @@ Error OS_OSX::shell_open(String p_uri) {
 
 String OS_OSX::get_locale() const {
 	NSString *locale_code = [[NSLocale preferredLanguages] objectAtIndex:0];
-	return [locale_code UTF8String];
+	return String([locale_code UTF8String]).replace("-", "_");
 }
 
 void OS_OSX::swap_buffers() {

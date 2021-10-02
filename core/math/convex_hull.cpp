@@ -75,16 +75,15 @@ subject to the following restrictions:
 // -- GODOT end --
 
 #ifdef DEBUG_ENABLED
-#define CHULL_ASSERT(m_cond)                                    \
-	do {                                                        \
-		if (unlikely(!(m_cond))) {                              \
-			ERR_PRINT("Assertion \"" _STR(m_cond) "\" failed.") \
-		}                                                       \
-	} while (0)
+#define CHULL_ASSERT(m_cond)                                 \
+	if (unlikely(!(m_cond))) {                               \
+		ERR_PRINT("Assertion \"" _STR(m_cond) "\" failed."); \
+	} else                                                   \
+		((void)0)
 #else
 #define CHULL_ASSERT(m_cond) \
 	do {                     \
-	} while (0)
+	} while (false)
 #endif
 
 #if defined(DEBUG_CONVEX_HULL) || defined(SHOW_ITERATIONS)
@@ -1047,8 +1046,8 @@ void ConvexHullInternal::compute_internal(int32_t p_start, int32_t p_end, Interm
 
 				return;
 			}
+			FALLTHROUGH;
 		}
-		// lint -fallthrough
 		case 1: {
 			Vertex *v = original_vertices[p_start];
 			v->edges = nullptr;

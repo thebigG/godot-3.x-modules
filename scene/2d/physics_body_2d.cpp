@@ -981,7 +981,8 @@ Ref<KinematicCollision2D> KinematicBody2D::_move(const Vector2 &p_motion, bool p
 	Collision col;
 
 	if (move_and_collide(p_motion, p_infinite_inertia, col, p_exclude_raycast_shapes, p_test_only)) {
-		if (motion_cache.is_null()) {
+		// Create a new instance when the cached reference is invalid or still in use in script.
+		if (motion_cache.is_null() || motion_cache->reference_get_count() > 1) {
 			motion_cache.instance();
 			motion_cache->owner = this;
 		}
@@ -1015,6 +1016,7 @@ bool KinematicBody2D::separate_raycast_shapes(bool p_infinite_inertia, Collision
 
 	if (deepest != -1) {
 		r_collision.collider = sep_res[deepest].collider_id;
+		r_collision.collider_rid = sep_res[deepest].collider;
 		r_collision.collider_metadata = sep_res[deepest].collider_metadata;
 		r_collision.collider_shape = sep_res[deepest].collider_shape;
 		r_collision.collider_vel = sep_res[deepest].collider_velocity;
@@ -1319,7 +1321,8 @@ Ref<KinematicCollision2D> KinematicBody2D::_get_slide_collision(int p_bounce) {
 		slide_colliders.resize(p_bounce + 1);
 	}
 
-	if (slide_colliders[p_bounce].is_null()) {
+	// Create a new instance when the cached reference is invalid or still in use in script.
+	if (slide_colliders[p_bounce].is_null() || slide_colliders[p_bounce]->reference_get_count() > 1) {
 		slide_colliders.write[p_bounce].instance();
 		slide_colliders.write[p_bounce]->owner = this;
 	}

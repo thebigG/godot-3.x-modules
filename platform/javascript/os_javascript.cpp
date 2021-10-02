@@ -121,6 +121,11 @@ EM_BOOL OS_JavaScript::fullscreen_change_callback(int p_event_type, const Emscri
 	return false;
 }
 
+EM_BOOL OS_JavaScript::blur_callback(int p_event_type, const EmscriptenFocusEvent *p_event, void *p_user_data) {
+	get_singleton()->input->release_pressed_events();
+	return false;
+}
+
 void OS_JavaScript::set_video_mode(const VideoMode &p_video_mode, int p_screen) {
 	video_mode = p_video_mode;
 }
@@ -751,11 +756,14 @@ const char *OS_JavaScript::get_video_driver_name(int p_driver) const {
 // Audio
 
 int OS_JavaScript::get_audio_driver_count() const {
-	return 1;
+	return audio_drivers.size();
 }
 
 const char *OS_JavaScript::get_audio_driver_name(int p_driver) const {
-	return "JavaScript";
+	if (audio_drivers.size() <= p_driver) {
+		return "Unknown";
+	}
+	return audio_drivers[p_driver]->get_name();
 }
 
 // Clipboard
@@ -869,7 +877,7 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
 	EMSCRIPTEN_RESULT result;
 #define EM_CHECK(ev)                         \
 	if (result != EMSCRIPTEN_RESULT_SUCCESS) \
-	ERR_PRINT("Error while setting " #ev " callback: Code " + itos(result))
+		ERR_PRINT("Error while setting " #ev " callback: Code " + itos(result));
 #define SET_EM_CALLBACK(target, ev, cb)                               \
 	result = emscripten_set_##ev##_callback(target, NULL, true, &cb); \
 	EM_CHECK(ev)
@@ -881,6 +889,7 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
 	SET_EM_CALLBACK(canvas_id, mousedown, mouse_button_callback)
 	SET_EM_WINDOW_CALLBACK(mousemove, mousemove_callback)
 	SET_EM_WINDOW_CALLBACK(mouseup, mouse_button_callback)
+	SET_EM_WINDOW_CALLBACK(blur, blur_callback)
 	SET_EM_CALLBACK(canvas_id, wheel, wheel_callback)
 	SET_EM_CALLBACK(canvas_id, touchstart, touch_press_callback)
 	SET_EM_CALLBACK(canvas_id, touchmove, touchmove_callback)
@@ -961,9 +970,7 @@ MainLoop *OS_JavaScript::get_main_loop() const {
 }
 
 void OS_JavaScript::resume_audio() {
-	if (audio_driver_javascript) {
-		audio_driver_javascript->resume();
-	}
+	AudioDriverJavaScript::resume();
 }
 
 void OS_JavaScript::fs_sync_callback() {
@@ -1021,9 +1028,10 @@ void OS_JavaScript::finalize() {
 	emscripten_webgl_commit_frame();
 	memdelete(visual_server);
 	emscripten_webgl_destroy_context(webgl_ctx);
-	if (audio_driver_javascript) {
-		memdelete(audio_driver_javascript);
+	for (int i = 0; i < audio_drivers.size(); i++) {
+		memdelete(audio_drivers[i]);
 	}
+	audio_drivers.clear();
 }
 
 // Miscellaneous
@@ -1217,7 +1225,6 @@ OS_JavaScript::OS_JavaScript() {
 
 	main_loop = NULL;
 	visual_server = NULL;
-	audio_driver_javascript = NULL;
 
 	swap_ok_cancel = false;
 	idb_available = godot_js_os_fs_is_persistent() != 0;
@@ -1225,8 +1232,13 @@ OS_JavaScript::OS_JavaScript() {
 	idb_is_syncing = false;
 
 	if (AudioDriverJavaScript::is_available()) {
-		audio_driver_javascript = memnew(AudioDriverJavaScript);
-		AudioDriverManager::add_driver(audio_driver_javascript);
+#ifdef NO_THREADS
+		audio_drivers.push_back(memnew(AudioDriverScriptProcessor));
+#endif
+		audio_drivers.push_back(memnew(AudioDriverWorklet));
+	}
+	for (int i = 0; i < audio_drivers.size(); i++) {
+		AudioDriverManager::add_driver(audio_drivers[i]);
 	}
 
 	Vector<Logger *> loggers;

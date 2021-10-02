@@ -284,6 +284,12 @@ String OS::get_locale() const {
 	return "en";
 }
 
+// Non-virtual helper to extract the 2 or 3-letter language code from
+// `get_locale()` in a way that's consistent for all platforms.
+String OS::get_locale_language() const {
+	return get_locale().left(3).replace("_", "");
+}
+
 // Helper function to ensure that a dir name/path will be valid on the OS
 String OS::get_safe_dir_name(const String &p_dir_name, bool p_allow_dir_separator) const {
 	Vector<String> invalid_chars = String(": * ? \" < > |").split(" ");
@@ -328,6 +334,11 @@ String OS::get_cache_path() const {
 String OS::get_bundle_resource_dir() const {
 	return ".";
 };
+
+// Path to macOS .app bundle embedded icon
+String OS::get_bundle_icon_path() const {
+	return String();
+}
 
 // OS specific path for user://
 String OS::get_user_data_dir() const {
