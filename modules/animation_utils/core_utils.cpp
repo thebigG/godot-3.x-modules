@@ -29,7 +29,7 @@
 /*************************************************************************/
 
 #include "core_utils.h"
-
+#include <iostream>
 void Summator::add(int p_value) {
 	count += p_value;
 }
@@ -46,8 +46,31 @@ void Summator::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add", "value"), &Summator::add);
 	ClassDB::bind_method(D_METHOD("reset"), &Summator::reset);
 	ClassDB::bind_method(D_METHOD("get_total"), &Summator::get_total);
+    ClassDB::bind_method(D_METHOD("get_animation"), &Summator::get_animation);
+    ClassDB::bind_method(D_METHOD("get_node"), &Summator::get_node);
+
 }
 
 Summator::Summator() {
 	count = 0;
+}
+
+/**
+ * @brief Summator::get_animation
+ * @return
+ */
+Ref<Animation> Summator::get_animation()
+{
+    animation.instance();
+    return animation;
+}
+
+/**
+ * @brief Summator::get_node
+ * @return
+ */
+Node* Summator::get_node()
+{
+    node = std::make_unique<Node>();
+    return node.get();
 }
