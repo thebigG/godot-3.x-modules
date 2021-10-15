@@ -50,7 +50,7 @@ public:
 	int get_total() const;
     Ref<Animation> animation;
     std::unique_ptr<Node>  node;
-    Ref<Animation> get_animation();
+    Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
     Node* get_node();
     Summator();
 };

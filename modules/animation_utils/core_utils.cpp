@@ -59,9 +59,30 @@ Summator::Summator() {
  * @brief Summator::get_animation
  * @return
  */
-Ref<Animation> Summator::get_animation()
+Ref<Animation> Summator::get_animation(NodePath node_path, String text, String delimeter)
 {
     animation.instance();
+    int track_index = animation->add_track(Animation::TrackType::TYPE_VALUE, -1);
+    animation->track_set_path(track_index, node_path);
+    int current_transition = 0.0;
+    String current_text = "";
+    //TODO:When doing this from GDScript, it returns a PoolStringArray.
+    //PoolStringArray is supposed to be faster than Vector and I would like to use it, but don't know
+    //how at the moment.
+    Vector<String> tokens  = text.split(delimeter);
+
+    for(int i = 0; i<tokens.size();i++)
+    {
+        current_text = current_text + tokens[i] + delimeter;
+
+        //This is very inefficient at the moment, but still learning the API...
+        Variant v{current_text};
+
+        animation->track_insert_key(track_index, current_transition, v);
+        current_transition = current_transition + 0.5;
+        animation->set_length(animation->get_length() + 0.5);
+    }
+
     return animation;
 }
 
