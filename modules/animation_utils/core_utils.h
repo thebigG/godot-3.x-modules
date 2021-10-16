@@ -31,10 +31,10 @@
 #ifndef CORE_UTILS_H
 #define CORE_UTILS_H
 
+#include "core/os/memory.h"
 #include "core/reference.h"
 #include "scene/main/node.h"
 #include "scene/resources/animation.h"
-#include "core/os/memory.h"
 #include <memory>
 
 class Summator : public Reference {
@@ -48,11 +48,11 @@ public:
 	void add(int p_value);
 	void reset();
 	int get_total() const;
-    Ref<Animation> animation;
-    std::unique_ptr<Node>  node;
-    Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
-    Node* get_node();
-    Summator();
+	Ref<Animation> animation;
+	std::unique_ptr<Node> node;
+	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
+	Node *get_node();
+	Summator();
 };
 
 #endif // CORE_UTILS_H
