@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  core_utils.h                                                         */
+/*  register_types.cpp                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,32 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORE_UTILS_H
-#define CORE_UTILS_H
+#include "register_types.h"
 
-#include "core/os/memory.h"
-#include "core/reference.h"
-#include "scene/main/node.h"
-#include "scene/resources/animation.h"
-#include <memory>
+#include "core/class_db.h"
+#include "core_utils.h"
 
-class AnimationUtils : public Reference {
-	GDCLASS(AnimationUtils, Reference);
-	int count;
+void register_animation_utils_types() {
+	ClassDB::register_class<AnimationUtils>();
+}
 
-protected:
-	static void _bind_methods();
-
-public:
-	void add(int p_value);
-	void reset();
-	int get_total() const;
-	Ref<Animation> animation;
-	std::unique_ptr<Node> node;
-	//TODO:This function really should be static...
-	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
-	Node *get_node();
-	AnimationUtils();
-};
-
-#endif // CORE_UTILS_H
+void unregister_animation_utils_types() {
+	// Nothing to do here in this example.
+}
