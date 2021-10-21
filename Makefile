@@ -11,3 +11,5 @@ clean:
 format:
 	./misc/scripts/clang_format.sh
 
+check_docs:
+	doc/tools/makerst.py --dry-run doc/classes modules
