@@ -37,8 +37,8 @@
 #include "scene/resources/animation.h"
 #include <memory>
 
-class Summator : public Reference {
-	GDCLASS(Summator, Reference);
+class AnimationUtils : public Reference {
+	GDCLASS(AnimationUtils, Reference);
 	int count;
 
 protected:
@@ -50,9 +50,10 @@ public:
 	int get_total() const;
 	Ref<Animation> animation;
 	std::unique_ptr<Node> node;
+	//TODO:This function really should be static...
 	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
 	Node *get_node();
-	Summator();
+	AnimationUtils();
 };
 
 #endif // CORE_UTILS_H

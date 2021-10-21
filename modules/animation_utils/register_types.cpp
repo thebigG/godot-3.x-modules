@@ -34,7 +34,7 @@
 #include "core_utils.h"
 
 void register_animation_utils_types() {
-	ClassDB::register_class<Summator>();
+	ClassDB::register_class<AnimationUtils>();
 }
 
 void unregister_animation_utils_types() {
