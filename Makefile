@@ -8,3 +8,6 @@ docs:
 clean:
 	rm -r bin
 
+format:
+	./misc/scripts/clang_format.sh
+
