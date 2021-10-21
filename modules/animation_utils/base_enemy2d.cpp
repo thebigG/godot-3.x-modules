@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  base_enemy2d.cpp                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,17 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
-
 #include "base_enemy2d.h"
-#include "core/class_db.h"
-#include "core_utils.h"
 
-void register_animation_utils_types() {
-	ClassDB::register_class<AnimationUtils>();
-	ClassDB::register_class<BaseEnemy2D>();
-}
-
-void unregister_animation_utils_types() {
-	// Nothing to do here in this example.
+BaseEnemy2D::BaseEnemy2D() {
 }
