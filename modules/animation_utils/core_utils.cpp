@@ -30,27 +30,27 @@
 
 #include "core_utils.h"
 #include <iostream>
-void Summator::add(int p_value) {
+void AnimationUtils::add(int p_value) {
 	count += p_value;
 }
 
-void Summator::reset() {
+void AnimationUtils::reset() {
 	count = 0;
 }
 
-int Summator::get_total() const {
+int AnimationUtils::get_total() const {
 	return count;
 }
 
-void Summator::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("add", "value"), &Summator::add);
-	ClassDB::bind_method(D_METHOD("reset"), &Summator::reset);
-	ClassDB::bind_method(D_METHOD("get_total"), &Summator::get_total);
-	ClassDB::bind_method(D_METHOD("get_animation"), &Summator::get_animation);
-	ClassDB::bind_method(D_METHOD("get_node"), &Summator::get_node);
+void AnimationUtils::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("add", "value"), &AnimationUtils::add);
+	ClassDB::bind_method(D_METHOD("reset"), &AnimationUtils::reset);
+	ClassDB::bind_method(D_METHOD("get_total"), &AnimationUtils::get_total);
+	ClassDB::bind_method(D_METHOD("get_animation"), &AnimationUtils::get_animation);
+	ClassDB::bind_method(D_METHOD("get_node"), &AnimationUtils::get_node);
 }
 
-Summator::Summator() {
+AnimationUtils::AnimationUtils() {
 	count = 0;
 }
 
@@ -58,7 +58,7 @@ Summator::Summator() {
  * @brief Summator::get_animation
  * @return
  */
-Ref<Animation> Summator::get_animation(NodePath node_path, String text, String delimeter) {
+Ref<Animation> AnimationUtils::get_animation(NodePath node_path, String text, String delimeter) {
 	animation.instance();
 	int track_index = animation->add_track(Animation::TrackType::TYPE_VALUE, -1);
 	animation->track_set_path(track_index, node_path);
@@ -87,7 +87,7 @@ Ref<Animation> Summator::get_animation(NodePath node_path, String text, String d
  * @brief Summator::get_node
  * @return
  */
-Node *Summator::get_node() {
+Node *AnimationUtils::get_node() {
 	node = std::make_unique<Node>();
 	return node.get();
 }
