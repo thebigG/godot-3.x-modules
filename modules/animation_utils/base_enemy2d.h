@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  base_enemy2d.h                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,17 +28,16 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
+#ifndef BASEENEMY2D_H
+#define BASEENEMY2D_H
 
-#include "base_enemy2d.h"
-#include "core/class_db.h"
-#include "core_utils.h"
+#include "scene/2d/physics_body_2d.h"
 
-void register_animation_utils_types() {
-	ClassDB::register_class<AnimationUtils>();
-	ClassDB::register_class<BaseEnemy2D>();
-}
+class BaseEnemy2D : public KinematicBody2D {
+	GDCLASS(BaseEnemy2D, KinematicBody2D);
 
-void unregister_animation_utils_types() {
-	// Nothing to do here in this example.
-}
+public:
+	BaseEnemy2D();
+};
+
+#endif // BASEENEMY2D_H
