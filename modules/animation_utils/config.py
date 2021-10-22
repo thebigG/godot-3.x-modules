@@ -11,7 +11,4 @@ def get_doc_path():
 
 
 def get_doc_classes():
-    return [
-        "AnimationUtils",
-        "BaseEnemy2D"
-    ]
+    return ["AnimationUtils", "BaseEnemy2D"]
