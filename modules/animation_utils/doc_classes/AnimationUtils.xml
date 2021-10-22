@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimationUtils" inherits="Reference" version="3.4">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add">
+			<return type="void" />
+			<argument index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_animation">
+			<return type="Animation" />
+			<argument index="0" name="arg0" type="NodePath" />
+			<argument index="1" name="arg1" type="String" />
+			<argument index="2" name="arg2" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_node">
+			<return type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="get_total" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="reset">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+	</constants>
+</class>
