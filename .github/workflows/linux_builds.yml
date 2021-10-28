@@ -31,7 +31,7 @@ jobs:
             cache-name: linux-editor-x11
             target: release_debug
             tools: true
-            sconsflags: tools=yes, p=x11
+            sconsflags: tools=yes p=x11
             bin: "./bin/godot.x11.tools.64"
             build-mono: true
             artifact: true
