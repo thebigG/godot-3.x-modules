@@ -88,6 +88,15 @@ jobs:
             sconsflags: module_mono_enabled=yes mono_glue=no
             bin: "./bin/godot.x11.opt.tools.64.mono"
             build-mono: true
+            artifact: false
+
+          - name: Editor w/ tools (target=release_debug, tools=yes, p=x11)
+            cache-name: linux-editor-x11
+            target: release_debug
+            tools: true
+            sconsflags: tools=yes, p=x11
+            bin: "./bin/godot.x11.tools.64"
+            build-mono: true
             artifact: true
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
