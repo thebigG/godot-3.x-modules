@@ -36,7 +36,7 @@ jobs:
             bin: "./bin/godot.x11.tools.64s"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
-            artifact: false
+            artifact: true
 
           - name: Template w/ Mono (target=release, tools=no)
             cache-name: linux-template-mono
