@@ -96,7 +96,7 @@ jobs:
             tools: true
             sconsflags: tools=yes p=x11
             bin: "./bin/godot.x11.tools.64"
-            build-mono: true
+            build-mono: false
             artifact: true
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
