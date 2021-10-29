@@ -95,7 +95,7 @@ jobs:
             target: release_debug
             tools: true
             sconsflags: tools=yes p=x11
-            bin: "./bin/godot.x11.tools.64"
+            bin: "./bin/godot.x11.opt.tools.64"
             build-mono: false
             artifact: true
 
@@ -105,10 +105,11 @@ jobs:
             tools: true
             sconsflags: use_asan=yes use_ubsan=yes
             test: true
-            bin: "./bin/godot.x11.tools.64s"
+            bin: "./bin/godot.x11.opt.tools.64"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
             artifact: true
+            publish-release: true
 
           - name: Template w/ Mono (target=release, tools=no)
             cache-name: linux-template-mono
@@ -276,7 +277,7 @@ jobs:
           name: ${{ matrix.cache-name }}
 
       - name: Upload binaries to release
-        if: ${{ matrix.bin }}
+        if: ${{ matrix.publish-release }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
