@@ -98,6 +98,7 @@ jobs:
             bin: "./bin/godot.x11.opt.tools.64"
             build-mono: false
             artifact: true
+            publish-release: true
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
             cache-name: linux-editor-sanitizers
@@ -105,11 +106,10 @@ jobs:
             tools: true
             sconsflags: use_asan=yes use_ubsan=yes
             test: true
-            bin: "./bin/godot.x11.opt.tools.64"
+            bin: "./bin/godot.x11.tools.64s"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
             artifact: true
-            publish-release: true
 
           - name: Template w/ Mono (target=release, tools=no)
             cache-name: linux-template-mono
