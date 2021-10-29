@@ -144,3 +144,13 @@ jobs:
         if: ${{ matrix.artifact }}
         with:
           name: ${{ matrix.cache-name }}
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./bin/godot.x11.tools.64
+          asset_name: Godot-continuous-release-linux.x86_64
+          tag: Godot-continuous-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
