@@ -283,7 +283,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ matrix.bin }}
-          asset_name: Godot_v${{matrix.version}}-nightly_linux.64
+          asset_name: Godot-3.x-modules_v${{matrix.version}}-nightly_linux.64
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"

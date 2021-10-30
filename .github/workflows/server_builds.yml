@@ -21,6 +21,7 @@ jobs:
             tools: true
             bin: "./bin/godot_server.x11.opt.tools.64.mono"
             publish-release: true
+            version: "3.3.4"
 
           - name: Linux Server w/ Mono (target=release, tools=no)
             cache-name: server-template-mono
@@ -126,7 +127,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ matrix.bin }}
-          asset_name: Godot_v${{matrix.version}}-headless_nightly_linux.64
+          asset_name: Godot-3.x-modules_v${{matrix.version}}-headless_nightly_linux.64
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
