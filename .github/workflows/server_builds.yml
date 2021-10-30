@@ -10,7 +10,22 @@ env:
 jobs:
   linux-editor:
     runs-on: "ubuntu-20.04"
-    name: Linux Headless w/ Mono (target=release_debug, tools=yes)
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux Headless w/ Mono (target=release_debug, tools=yes)
+            cache-name: server-editor-mono
+            target: release_debug
+            tools: true
+            bin: "godot_server.x11.opt.tools.64"
+            publish-release: true
+
+          - name: Linux Server w/ Mono (target=release, tools=no)
+            cache-name: server-template-mono
+            target: release
+            tools: false
 
     steps:
       - uses: actions/checkout@v2
@@ -100,21 +115,18 @@ jobs:
       - name: Set up Python 3.x
         uses: actions/setup-python@v2
         with:
-          # Semantic version range syntax or exact version of a Python version
-          python-version: '3.x'
-          # Optional - x64 or x86 architecture, defaults to x64
-          architecture: 'x64'
+          sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }}
+          platform: server
+          target: ${{ matrix.target }}
+          tools: ${{ matrix.tools }}
 
-      # You can test your matrix by printing the current Python version
-      - name: Configuring Python packages
-        run: |
-          python -c "import sys; print(sys.version)"
-          python -m pip install scons
-          python --version
-          scons --version
-
-      - name: Compilation
-        env:
-          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
-        run: |
-          scons -j2 target=release tools=no module_mono_enabled=yes mono_glue=no
+      - name: Upload binaries to release
+        if: ${{ matrix.publish-release }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ matrix.bin }}
+          asset_name: Godot_v${{matrix.version}}-headless_nightly_linux.64
+          tag: Godot-continuous-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
