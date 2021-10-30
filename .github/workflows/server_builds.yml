@@ -22,7 +22,7 @@ jobs:
             cache-name: server-editor-mono
             target: release_debug
             tools: true
-            bin: "bin/godot_server.x11.opt.tools.64"
+            bin: "./bin/godot_server.x11.opt.tools.64"
             publish-release: true
 
           - name: Linux Server w/ Mono (target=release, tools=no)
