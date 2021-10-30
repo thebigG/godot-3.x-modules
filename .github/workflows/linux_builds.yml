@@ -99,6 +99,7 @@ jobs:
             build-mono: false
             artifact: true
             publish-release: true
+            version: "3.3.4"
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
             cache-name: linux-editor-sanitizers
@@ -282,7 +283,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ matrix.bin }}
-          asset_name: Godot-continuous-release-linux.x86_64
+          asset_name: Godot_v${{matrix.version}}-nightly_linux.64
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
