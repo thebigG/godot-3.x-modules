@@ -22,6 +22,8 @@ jobs:
             cache-name: server-editor-mono
             target: release_debug
             tools: true
+            bin: "godot_server.x11.opt.tools.64"
+            publish-release: true
 
           - name: Linux Server w/ Mono (target=release, tools=no)
             cache-name: server-template-mono
@@ -59,3 +61,14 @@ jobs:
           platform: server
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
+
+      - name: Upload binaries to release
+        if: ${{ matrix.publish-release }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ matrix.bin }}
+          asset_name: Godot_v${{matrix.version}}-headless_nightly_linux.64
+          tag: Godot-continuous-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
