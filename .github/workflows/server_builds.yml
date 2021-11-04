@@ -24,7 +24,7 @@ jobs:
             tools: true
             bin: "./bin/godot_server.x11.opt.tools.64"
             publish-release: true
-            version: "3.3.4"
+            version: "3.4"
 
           - name: Linux Server (target=release, tools=no)
             cache-name: server-template-mono
