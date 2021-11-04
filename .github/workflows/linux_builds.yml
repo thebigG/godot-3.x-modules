@@ -99,7 +99,7 @@ jobs:
             build-mono: false
             artifact: true
             publish-release: true
-            version: "3.3.4"
+            version: "3.4"
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
             cache-name: linux-editor-sanitizers
