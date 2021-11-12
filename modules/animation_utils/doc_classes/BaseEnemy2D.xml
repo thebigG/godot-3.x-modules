@@ -7,7 +7,16 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="damage">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
 	</methods>
+	<members>
+		<member name="health" type="float" setter="" getter="get_health" default="1.0">
+		</member>
+	</members>
 	<constants>
 	</constants>
 </class>
