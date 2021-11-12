@@ -42,15 +42,15 @@ class BaseEnemy2D : public KinematicBody2D {
 	GDCLASS(BaseEnemy2D, KinematicBody2D);
 
 public:
-    virtual void damage();
+	virtual void damage();
 	BaseEnemy2D();
-    real_t health; // value between 0 and 1
+	real_t health; // value between 0 and 1
 
-    real_t get_health() const;
+	real_t get_health() const;
 
 protected:
-    static void _bind_methods();
-    double damage_interval;
+	static void _bind_methods();
+	double damage_interval;
 };
 
 #endif // BASEENEMY2D_H
