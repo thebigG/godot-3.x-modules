@@ -42,15 +42,20 @@ class BaseEnemy2D : public KinematicBody2D {
 	GDCLASS(BaseEnemy2D, KinematicBody2D);
 
 public:
+	enum State { ALIVE = 1,
+		DEAD = 2 };
 	virtual void damage();
 	BaseEnemy2D();
 	real_t health; // value between 0 and 1
-
+	State state;
 	real_t get_health() const;
+	BaseEnemy2D::State get_state() const;
 
 protected:
 	static void _bind_methods();
 	double damage_interval;
 };
+
+VARIANT_ENUM_CAST(BaseEnemy2D::State);
 
 #endif // BASEENEMY2D_H

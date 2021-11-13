@@ -31,22 +31,34 @@
 #include "base_enemy2d.h"
 
 BaseEnemy2D::BaseEnemy2D() :
-		health{ MAX_HEALTH }, damage_interval{ MAX_HEALTH } {}
+		health{ MAX_HEALTH }, state{ ALIVE }, damage_interval{ MAX_HEALTH } {}
 
 real_t BaseEnemy2D::get_health() const {
 	return health;
 }
 
+BaseEnemy2D::State BaseEnemy2D::get_state() const {
+	return state;
+}
+
 void BaseEnemy2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("damage"), &BaseEnemy2D::damage);
 	ClassDB::bind_method(D_METHOD("get_health"), &BaseEnemy2D::get_health);
+	ClassDB::bind_method(D_METHOD("get_state"), &BaseEnemy2D::get_state);
+
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "health", PROPERTY_HINT_NONE), "", "get_health");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "state", PROPERTY_HINT_ENUM), "", "get_state");
+
+	BIND_ENUM_CONSTANT(ALIVE);
+	BIND_ENUM_CONSTANT(DEAD);
 }
 
 void BaseEnemy2D::damage() {
 	if (health <= ZERO_HEALTH) {
 		return;
 	}
-
 	health -= damage_interval;
+	if (health == ZERO_HEALTH) {
+		state = State::DEAD;
+	}
 }
