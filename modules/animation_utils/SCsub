@@ -7,4 +7,3 @@ env_animation_utils = env_modules.Clone()
 
 # Godot's own source files
 env_animation_utils.add_source_files(env.modules_sources, "*.cpp")
-
