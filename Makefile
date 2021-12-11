@@ -18,6 +18,10 @@ docs:
 clean:
 	rm -r bin
 
+clean-scons:
+	scons -j${CORES} --clean
+	scons -j${CORES} --no-cache
+
 format:
 	./misc/scripts/clang_format.sh
 
