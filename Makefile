@@ -9,6 +9,10 @@ linux-release:
 linux-server:
 	scons -j$(CORES) platform=server tools=no target=release
 
+linux-templates:
+	scons platform=x11 tools=no target=release bits=32
+	scons platform=x11 tools=no target=release_debug bits=32
+
 linux-server-tools:
 	scons -j${CORES} platform=server tools=yes target=release_debug
 
