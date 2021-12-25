@@ -62,7 +62,7 @@ jobs:
 
       - name: Configure dependencies
         run: |
-          sudo dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
+          sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y --no-install-recommends \
           ca-certificates \
           git \
           git-lfs \
