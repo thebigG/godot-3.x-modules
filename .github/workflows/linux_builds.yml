@@ -63,7 +63,7 @@ jobs:
       - name: Linux dependencies
         shell: bash
         run: |
-          # Azure repositories are not reliable, we need to prevent azure giving us packages.
+          apt update && apt install sudo
           sudo rm -f /etc/apt/sources.list.d/*
           sudo cp -f misc/ci/sources.list /etc/apt/sources.list
           sudo apt-get update
