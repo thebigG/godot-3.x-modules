@@ -10,7 +10,7 @@ env:
 jobs:
   linux-template:
     runs-on: "ubuntu-20.04"
-#    container:
+#    container:-Add linux templates.
 #      image: thebigg1/godot-linux-templates:latest
     name: Linux templates X11
 #    name: ${{ matrix.name }}
@@ -59,6 +59,11 @@ jobs:
           sudo rm -f /etc/apt/sources.list.d/*
           sudo cp -f misc/ci/sources.list /etc/apt/sources.list
           sudo apt-get update
+
+      - name: Configure dependencies
+          run: |
+            sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev xvfb \
+              libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm
 
       # Upload cache on completion and check it out now
       - name: Load .scons_cache directory
@@ -128,14 +133,14 @@ jobs:
           name: ${{ github.job }}
           path: bin/*
           retention-days: 14
-      - name: Upload binaries to release
-        if: ${{ matrix.publish-release }}
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ matrix.bin }}
-          asset_name: Godot-3.x-modules_v${{matrix.version}}-nightly_linux.64
-          tag: Godot-continuous-release
-          overwrite: true
-          body: "Bleeding edge release for those who like to live on the edge :)"
+#      - name: Upload binaries to release
+#        if: ${{ matrix.publish-release }}
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          file: ${{ matrix.bin }}
+#          asset_name: Godot-3.x-modules_v${{matrix.version}}-nightly_linux.64
+#          tag: Godot-continuous-release
+#          overwrite: true
+#          body: "Bleeding edge release for those who like to live on the edge :)"
 
