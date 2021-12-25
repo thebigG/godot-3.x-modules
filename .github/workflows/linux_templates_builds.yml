@@ -10,8 +10,8 @@ env:
 jobs:
   linux-template:
     runs-on: "ubuntu-20.04"
-    container:
-      image: thebigg1/godot-linux-templates:latest
+#    container:
+#      image: thebigg1/godot-linux-templates:latest
     name: ${{ matrix.name }}
     strategy:
       fail-fast: false
@@ -48,14 +48,6 @@ jobs:
             build-mono: false
             # Skip 2GiB artifact speeding up action.
             artifact: true
-
-    #          - name: Template w/ Mono (target=release, tools=no)
-    #            cache-name: linux-template-mono
-    #            target: release
-    #            tools: false
-    #            sconsflags: module_mono_enabled=yes mono_glue=no debug_symbols=no
-    #            build-mono: false
-    #            artifact: true
 
     steps:
       - uses: actions/checkout@v2
