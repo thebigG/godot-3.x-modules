@@ -95,12 +95,12 @@ jobs:
           python --version
           scons --version
 
-      - name: Compilation
-        env:
-          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
-        run: |
-          scons target=release tools=no module_mono_enabled=yes mono_glue=no
-          ls -l bin/
+#      - name: Compilation
+#        env:
+#          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+#        run: |
+#          scons target=release tools=no module_mono_enabled=yes mono_glue=no
+#          ls -l bin/
 
       - name: Compile linux templates
         env:
