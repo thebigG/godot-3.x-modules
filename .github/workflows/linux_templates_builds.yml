@@ -12,42 +12,43 @@ jobs:
     runs-on: "ubuntu-20.04"
 #    container:
 #      image: thebigg1/godot-linux-templates:latest
-    name: ${{ matrix.name }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          #          - name: Editor w/ Mono (target=release_debug, tools=yes)
-          #            cache-name: linux-editor-mono
-          #            target: release_debug
-          #            tools: true
-          #            sconsflags: module_mono_enabled=yes mono_glue=no
-          #            bin: "./bin/godot.x11.opt.tools.64.mono"
-          #            build-mono: true
-          #            artifact: false
-
-          - name: Editor w/ tools (target=release_debug, tools=yes, p=x11)
-            cache-name: linux-editor-x11
-            target: release_debug
-            tools: true
-            sconsflags: tools=yes p=x11
-            bin: "./bin/godot.x11.opt.tools.64"
-            bin-template: "linux_templates.zip"
-            build-mono: false
-            artifact: true
-            publish-release: true
-            version: "3.3.4"
-
-          - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
-            cache-name: linux-editor-sanitizers
-            target: debug
-            tools: true
-            sconsflags: use_asan=yes use_ubsan=yes
-            test: true
-            bin: "./bin/godot.x11.tools.64s"
-            build-mono: false
-            # Skip 2GiB artifact speeding up action.
-            artifact: true
+    name: Linux templates X11
+#    name: ${{ matrix.name }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        include:
+#          #          - name: Editor w/ Mono (target=release_debug, tools=yes)
+#          #            cache-name: linux-editor-mono
+#          #            target: release_debug
+#          #            tools: true
+#          #            sconsflags: module_mono_enabled=yes mono_glue=no
+#          #            bin: "./bin/godot.x11.opt.tools.64.mono"
+#          #            build-mono: true
+#          #            artifact: false
+#
+#          - name: Editor w/ tools (target=release_debug, tools=yes, p=x11)
+#            cache-name: linux-editor-x11
+#            target: release_debug
+#            tools: true
+#            sconsflags: tools=yes p=x11
+#            bin: "./bin/godot.x11.opt.tools.64"
+#            bin-template: "linux_templates.zip"
+#            build-mono: false
+#            artifact: true
+#            publish-release: true
+#            version: "3.3.4"
+#
+#          - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
+#            cache-name: linux-editor-sanitizers
+#            target: debug
+#            tools: true
+#            sconsflags: use_asan=yes use_ubsan=yes
+#            test: true
+#            bin: "./bin/godot.x11.tools.64s"
+#            build-mono: false
+#            # Skip 2GiB artifact speeding up action.
+#            artifact: true
 
     steps:
       - uses: actions/checkout@v2
