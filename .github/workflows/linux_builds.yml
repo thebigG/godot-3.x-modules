@@ -72,7 +72,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
             libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm
-          sudo apt-get install build-essential pkg-config libpcre2-dev:i386 libmount-dev:i386 libselinux1:i386  libmount1:i386 libselinux1-dev:i386 libpulse-mainloop-glib0:i386  libglib2.0-0:i386 libglib2.0-dev:i386 libx11-dev:i386 libxcursor-dev:i386   \
+          sudo apt-get install build-essential pkg-config libpcre2-posix2:i386  libpcre2-8-0:i386 libpcre2-dev:i386 libmount-dev:i386 libselinux1:i386  libmount1:i386 libselinux1-dev:i386 libpulse-mainloop-glib0:i386  libglib2.0-0:i386 libglib2.0-dev:i386 libx11-dev:i386 libxcursor-dev:i386   \
                       libxinerama-dev:i386 libgl1-mesa-dev:i386 libglu-dev:i386 libasound2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libxi-dev:i386 libxrandr-dev:i386 yasm:i386 gcc-multilib g++-multilib
 
 
