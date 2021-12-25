@@ -70,9 +70,9 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
+          sudo apt-get install -ybuild-essential pkg-config libx11-dev libxcursor-dev \
             libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm
-          sudo apt-get install build-essential pkg-config libx11-dev:i386 libxcursor-dev:i386               libxinerama-dev:i386 libgl1-mesa-dev:i386 libglu-dev:i386 libasound2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libxi-dev:i386 libxrandr-dev:i386 yasm:i386 gcc-multilib g++-multilib
+          sudo apt-get install -y build-essential pkg-config libx11-dev:i386 libxcursor-dev:i386               libxinerama-dev:i386 libgl1-mesa-dev:i386 libglu-dev:i386 libasound2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libxi-dev:i386 libxrandr-dev:i386 yasm:i386 gcc-multilib g++-multilib
 
 
 
