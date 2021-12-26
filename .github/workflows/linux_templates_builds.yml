@@ -10,8 +10,8 @@ env:
 jobs:
   linux-template:
     runs-on: "ubuntu-20.04"
-#    container:-Add linux templates.
-#      image: thebigg1/godot-linux-templates:latest
+    container:
+      image: thebigg1/godot-linux-templates:latest
     name: Linux templates X11
 #    name: ${{ matrix.name }}
 #    strategy:
@@ -56,53 +56,53 @@ jobs:
       # Azure repositories are not reliable, we need to prevent azure giving us packages.
       - name: Make apt sources.list use the default Ubuntu repositories
         run: |
-          sudo rm -f /etc/apt/sources.list.d/*
-          sudo cp -f misc/ci/sources.list /etc/apt/sources.list
-          sudo apt-get update
+          rm -f /etc/apt/sources.list.d/*
+          cp -f misc/ci/sources.list /etc/apt/sources.list
+          apt-get update
 
-      - name: Configure dependencies
-        run: |
-          sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-          ca-certificates \
-          git \
-          git-lfs \
-          python \
-          python-openssl \
-          unzip \
-          wget \
-          zip \
-          adb \
-          xvfb \
-          openjdk-8-jdk-headless \
-          libmonosgen-2.0-1 \
-          libmono-cil-dev \
-          build-essential \
-          pkg-config \
-          libx11-dev \
-          libxcursor-dev \
-          libxinerama-dev \
-          libgl1-mesa-dev \
-          libglu-dev \
-          libasound2-dev \
-          libpulse-dev \
-          libudev-dev \
-          libxi-dev \
-          libxrandr-dev \
-          build-essential \
-          libx11-dev:i386 \
-          libxcursor-dev:i386 \
-          libxinerama-dev:i386 \
-          libgl1-mesa-dev:i386 \
-          libglu-dev:i386 \
-          libasound2-dev:i386 \
-          libpulse-dev:i386 \
-          libudev-dev:i386 \
-          libxi-dev:i386 \
-          libxrandr-dev:i386 \
-          yasm:i386 \
-          gcc-multilib \
-          g++-multilib \
-          scons
+#      - name: Configure dependencies
+#        run: |
+#          sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+#          ca-certificates \
+#          git \
+#          git-lfs \
+#          python \
+#          python-openssl \
+#          unzip \
+#          wget \
+#          zip \
+#          adb \
+#          xvfb \
+#          openjdk-8-jdk-headless \
+#          libmonosgen-2.0-1 \
+#          libmono-cil-dev \
+#          build-essential \
+#          pkg-config \
+#          libx11-dev \
+#          libxcursor-dev \
+#          libxinerama-dev \
+#          libgl1-mesa-dev \
+#          libglu-dev \
+#          libasound2-dev \
+#          libpulse-dev \
+#          libudev-dev \
+#          libxi-dev \
+#          libxrandr-dev \
+#          build-essential \
+#          libx11-dev:i386 \
+#          libxcursor-dev:i386 \
+#          libxinerama-dev:i386 \
+#          libgl1-mesa-dev:i386 \
+#          libglu-dev:i386 \
+#          libasound2-dev:i386 \
+#          libpulse-dev:i386 \
+#          libudev-dev:i386 \
+#          libxi-dev:i386 \
+#          libxrandr-dev:i386 \
+#          yasm:i386 \
+#          gcc-multilib \
+#          g++-multilib \
+#          scons
 
 
       # Upload cache on completion and check it out now
