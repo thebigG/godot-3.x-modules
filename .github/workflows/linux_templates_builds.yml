@@ -159,7 +159,7 @@ jobs:
           cd bin
           cp godot.x11.opt.32 linux_x11_32_release
           cp godot.x11.opt.debug.32 linux_x11_32_debug
-          cp godot.x11.opt.64 linux_x11_64_releasecache
+          cp godot.x11.opt.64 linux_x11_64_release
           cp godot.x11.opt.debug.64 linux_x11_64_debug
           mkdir linux_templates
           cp linux_x11_32_debug linux_templates/
