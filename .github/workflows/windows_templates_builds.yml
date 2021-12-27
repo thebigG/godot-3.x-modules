@@ -10,7 +10,7 @@ env:
   SCONS_CACHE_LIMIT: 4096
 
 jobs:
-  linux-template:
+  windows-template:
     runs-on: "windows-latest"
     container:
       image: thebigg1/godot-windows-templates:latest
