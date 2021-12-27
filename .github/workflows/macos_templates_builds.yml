@@ -1,33 +1,23 @@
-name: 🏁 Windows Templates Builds
+name: 🍎 macOS Builds
 on: [push, pull_request]
 
 # Global Settings
-# SCONS_CACHE for windows must be set in the build environment
 env:
   GODOT_BASE_BRANCH: 3.x
-  SCONSFLAGS: platform=windows verbose=yes warnings=all werror=yes debug_symbols=no --jobs=2
-  SCONS_CACHE_MSVC_CONFIG: true
+  SCONSFLAGS: platform=osx verbose=yes warnings=all werror=yes debug_symbols=no --jobs=2
   SCONS_CACHE_LIMIT: 4096
 
 jobs:
-  windows-template:
-    runs-on: "ubuntu-20.04"
-    container:
-      image: thebigg1/godot-windows-templates:latest
-    name: Windows templates
+  macos-template:
+    runs-on: "macos-latest"
+    name: Template (target=release, tools=no)
+
     steps:
       - uses: actions/checkout@v2
 
-      # Azure repositories are not reliable, we need to prevent azure giving us packages.
-      - name: Make apt sources.list use the default Ubuntu repositories
-        run: |
-          rm -f /etc/apt/sources.list.d/*
-          cp -f misc/ci/sources.list /etc/apt/sources.list
-          apt-get update
-
       # Upload cache on completion and check it out now
       - name: Load .scons_cache directory
-        id: windows-template-cache
+        id: macos-3.x-template-cache
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/.scons_cache/
@@ -55,31 +45,17 @@ jobs:
           python --version
           scons --version
 
-      - name: Compile windows templates
+      - name: Compile templates
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons platform=windows tools=no target=release_debug bits=32
-          scons platform=windows tools=no target=release bits=32
-          scons platform=windows tools=no target=release_debug bits=64
-          scons platform=windows tools=no target=release bits=64
+          scons target=release tools=no
+          scons target=release_debug tools=no
           ls -l bin/
-
-      - name: Zip Templates
-        env:
-          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
-        run: |
-          cd bin
-          cp godot.windows.opt.32.exe windows_32_release.exe
-          cp godot.windows.opt.debug.32.exe windows_32_debug.exe
-          cp godot.windows.opt.64.exe windows_64_release.exe
-          cp godot.windows.opt.debug.64.exe windows_64_debug.exe
-          mkdir windows_templates
-          cp windows_32_debug.exe windows_templates/
-          cp windows_32_release.exe windows_templates/
-          cp windows_64_release.exe windows_templates/
-          cp windows_64_debug.exe windows_templates/
-          zip -r windows_3.4.beta_templates.zip windows_templates/
+          mkdir osx_templates
+          cp godot_osx_debug.64 osx_templates/
+          cp godot_osx_release.64 osx_templates/
+          zip -r osx_3.4.beta_templates.zip osx_templates/
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,9 +66,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/windows_3.4.beta_templates.zip
-          asset_name: windows_3.4.beta_templates.zip
+          file: bin/osx_3.4.beta_templates.zip
+          asset_name: osx_3.4.beta_templates.zip
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
-
