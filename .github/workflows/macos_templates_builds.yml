@@ -52,10 +52,16 @@ jobs:
           scons target=release tools=no
           scons target=release_debug tools=no
           ls -l bin/
-          mkdir osx_templates
-          cp godot.osx.debug.64 osx_templates/
-          cp godot.osx.release.64 osx_templates/
-          zip -r osx_3.4.beta_templates.zip osx_templates/
+      - name: Zip Templates
+        env:
+          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+        run: |
+          cd bin
+          cp ../misc/dist/osx_template.app .
+          mkdir osx_template.app/Contents/MacOS
+          cp godot.osx.opt.debug.64 osx_template.app/Contents/MacOS/
+          cp godot.osx.opt.64 osx_template.app/Contents/MacOS/
+          zip -r osx_3.4.beta_templates.zip osx_template.app/
 
       - uses: actions/upload-artifact@v2
         with:
