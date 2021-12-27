@@ -17,7 +17,7 @@ jobs:
 
       # Upload cache on completion and check it out now
       - name: Load .scons_cache directory
-        id: macos-3.x-template-cache
+        id: macos-template-cache-modules
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/.scons_cache/
