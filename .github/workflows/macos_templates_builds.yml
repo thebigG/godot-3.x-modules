@@ -53,8 +53,8 @@ jobs:
           scons target=release_debug tools=no
           ls -l bin/
           mkdir osx_templates
-          cp godot_osx_debug.64 osx_templates/
-          cp godot_osx_release.64 osx_templates/
+          cp godot.osx.debug.64 osx_templates/
+          cp godot.osx.release.64 osx_templates/
           zip -r osx_3.4.beta_templates.zip osx_templates/
 
       - uses: actions/upload-artifact@v2
