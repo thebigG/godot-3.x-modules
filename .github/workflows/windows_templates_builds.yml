@@ -1,0 +1,98 @@
+name: 🐧 Windows Templates Builds
+on: [push, pull_request]
+
+# Global Settings
+# SCONS_CACHE for windows must be set in the build environment
+env:
+  GODOT_BASE_BRANCH: 3.x
+  SCONSFLAGS: platform=windows verbose=yes warnings=all werror=yes debug_symbols=no --jobs=2
+  SCONS_CACHE_MSVC_CONFIG: true
+  SCONS_CACHE_LIMIT: 4096
+
+jobs:
+  linux-template:
+    runs-on: "windows-latest"
+    container:
+      image: thebigg1/godot-windows-templates:latest
+    name: Linux templates X11
+    steps:
+      - uses: actions/checkout@v2
+
+      # Azure repositories are not reliable, we need to prevent azure giving us packages.
+      - name: Make apt sources.list use the default Ubuntu repositories
+        run: |
+          rm -f /etc/apt/sources.list.d/*
+          cp -f misc/ci/sources.list /etc/apt/sources.list
+          apt-get update
+
+      # Upload cache on completion and check it out now
+      - name: Load .scons_cache directory
+        id: linux-template-cache
+        uses: actions/cache@v2
+        with:
+          path: ${{github.workspace}}/.scons_cache/
+          key: ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}
+        continue-on-error: true
+
+      # Use python 3.x release (works cross platform)
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.x'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x64'
+
+      # You can test your matrix by printing the current Python version
+      - name: Configuring Python packages
+        run: |
+          python -c "import sys; print(sys.version)"
+          python -m pip install scons
+          python --version
+          scons --version
+
+      - name: Compile windows templates
+        env:
+          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+        run: |
+          scons platform=windows tools=no target=release_debug bits=32
+          scons platform=windows tools=no target=release bits=32
+          scons platform=windows tools=no target=release_debug bits=64
+          scons platform=windows tools=no target=release bits=64
+          ls -l bin/
+
+      - name: Zip Templates
+        env:
+          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+        run: |
+          cd bin
+          cp godot.windows.opt.32.exe windows_32_release.exe
+          cp godot.windows.opt.debug.32.exe windows_32_debug.exe
+          cp godot.windows.opt.64.exe windows_64_release.exe
+          cp godot.windows.opt.debug.64.exe windows_64_debug.exe
+          mkdir windows_templates
+          cp windows_32_debug.exe windows_templates/
+          cp windows_32_release.exe windows_templates/
+          cp windows_64_release.exe windows_templates/
+          cp windows_64_debug.exe windows_templates/
+          zip -r windows_3.4.beta_templates.zip windows_templates/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.job }}
+          path: bin/*
+          retention-days: 14
+      - name: Upload templates to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: bin/windows_3.4.beta_templates.zip
+          asset_name: windows_3.4.beta_templates.zip
+          tag: Godot-continuous-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
+
