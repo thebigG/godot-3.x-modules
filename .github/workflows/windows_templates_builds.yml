@@ -11,7 +11,7 @@ env:
 
 jobs:
   windows-template:
-    runs-on: "windows-latest"
+    runs-on: "ubuntu-20.04"
     container:
       image: thebigg1/godot-windows-templates:latest
     name: Windows templates
