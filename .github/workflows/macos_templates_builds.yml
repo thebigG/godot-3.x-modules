@@ -1,4 +1,4 @@
-name: 🍎 macOS Builds
+name: 🍎 macOS Templates Builds
 on: [push, pull_request]
 
 # Global Settings
