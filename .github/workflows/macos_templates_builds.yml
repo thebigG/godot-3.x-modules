@@ -57,7 +57,7 @@ jobs:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
           cd bin
-          cp ../misc/dist/osx_template.app .
+          cp -r ../misc/dist/osx_template.app .
           mkdir osx_template.app/Contents/MacOS
           cp godot.osx.opt.debug.64 osx_template.app/Contents/MacOS/
           cp godot.osx.opt.64 osx_template.app/Contents/MacOS/
