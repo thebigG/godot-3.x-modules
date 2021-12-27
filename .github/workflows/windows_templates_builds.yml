@@ -1,4 +1,4 @@
-name: 🐧 Windows Templates Builds
+name: 🏁 Windows Templates Builds
 on: [push, pull_request]
 
 # Global Settings
@@ -14,7 +14,7 @@ jobs:
     runs-on: "windows-latest"
     container:
       image: thebigg1/godot-windows-templates:latest
-    name: Linux templates X11
+    name: Windows templates
     steps:
       - uses: actions/checkout@v2
 
@@ -27,7 +27,7 @@ jobs:
 
       # Upload cache on completion and check it out now
       - name: Load .scons_cache directory
-        id: linux-template-cache
+        id: windows-template-cache
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/.scons_cache/
