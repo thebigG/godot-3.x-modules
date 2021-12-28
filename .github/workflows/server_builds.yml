@@ -18,13 +18,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Linux Headless (target=release_debug, tools=yes)
-            cache-name: server-editor-mono
-            target: release_debug
-            tools: true
-            bin: "./bin/godot_server.x11.opt.tools.64"
-            publish-release: true
-            version: "3.4"
+#          - name: Linux Headless (target=release_debug, tools=yes)
+#            cache-name: server-editor-mono
+#            target: release_debug
+#            tools: true
+#            bin: "./bin/godot_server.x11.opt.tools.64"
+#            publish-release: true
+#            version: "3.4"
 
           - name: Linux Server (target=release, tools=no)
             cache-name: server-template-mono
@@ -64,7 +64,19 @@ jobs:
 
   linux-server:
     runs-on: "ubuntu-20.04"
-    name: Linux Server w/ Mono (target=release, tools=no)
+    name: ${{ matrix.name }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux Headless (target=release_debug, tools=yes)
+            cache-name: server-editor-mono
+            target: release_debug
+            tools: true
+            bin: "./bin/godot_server.x11.opt.tools.64"
+            publish-release: true
+            version: "3.4"
 
     steps:
       - uses: actions/checkout@v2
@@ -79,7 +91,7 @@ jobs:
       - name: Configure dependencies
         run: |
           sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
-            libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm
+            libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm scons
 
       # Upload cache on completion and check it out now
       - name: Load .scons_cache directory
@@ -87,11 +99,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/.scons_cache/
-          key: ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}-${{github.sha}}
+          key: ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-3-xmodules-${{github.ref}}-${{github.sha}}
           restore-keys: |
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-3-xmodules-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-3-xmodules-${{github.ref}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-3-xmodules
         continue-on-error: true
 
       # Use python 3.x release (works cross platform)
@@ -103,13 +115,20 @@ jobs:
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 
+      # We should always be explicit with our flags usage here since it's gonna be sure to always set those flags
+      - name: Compilation
+        env:
+          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+        run: |
+          scons -j2 verbose=yes warnings=all werror=yes platform=server tools=yes target=release_debug
+
       - name: Upload binaries to release
         if: ${{ matrix.publish-release }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ matrix.bin }}
-          asset_name: Godot-3.x-modules_v${{matrix.version}}-headless_nightly_linux.64
+          asset_name: Godot-3.x-modules_v${{matrix.version}}_headless_nightly_linux.64
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
