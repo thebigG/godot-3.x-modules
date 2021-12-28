@@ -21,11 +21,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/.scons_cache/
-          key: ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules-${{github.ref}}-${{github.sha}}
+          key: ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}-${{github.sha}}
           restore-keys: |
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x-${{github.ref}}
+            ${{github.job}}-${{env.GODOT_BASE_BRANCH}}-modules3x
         continue-on-error: true
 
       # Use python 3.x release (works cross platform)
