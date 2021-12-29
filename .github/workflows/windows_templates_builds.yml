@@ -79,7 +79,7 @@ jobs:
           cp windows_32_release.exe windows_templates/
           cp windows_64_release.exe windows_templates/
           cp windows_64_debug.exe windows_templates/
-          zip -r windows_3.4.beta_templates.zip windows_templates/
+          zip -r windows_3.3.4.stable_templates.zip windows_templates/
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,8 +90,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/windows_3.4.beta_templates.zip
-          asset_name: windows_3.4.beta_templates.zip
+          file: bin/windows_3.3.4.stable_templates.zip
+          asset_name: windows_3.3.4.stable_templates.zip
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"

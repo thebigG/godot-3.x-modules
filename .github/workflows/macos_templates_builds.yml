@@ -61,7 +61,7 @@ jobs:
           mkdir osx_template.app/Contents/MacOS
           cp godot.osx.opt.debug.64 osx_template.app/Contents/MacOS/
           cp godot.osx.opt.64 osx_template.app/Contents/MacOS/
-          zip -r osx_3.4.beta_templates.zip osx_template.app/
+          zip -r osx_3.3.4.stable_templates.zip osx_template.app/
 
       - uses: actions/upload-artifact@v2
         with:
@@ -72,8 +72,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/osx_3.4.beta_templates.zip
-          asset_name: osx_3.4.beta_templates.zip
+          file: bin/osx_3.3.4.stable_templates.zip
+          asset_name: osx_3.3.4.stable_templates.zip
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
