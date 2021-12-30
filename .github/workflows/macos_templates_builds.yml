@@ -59,8 +59,10 @@ jobs:
           cd bin
           cp -r ../misc/dist/osx_template.app .
           mkdir osx_template.app/Contents/MacOS
-          cp godot.osx.opt.debug.64 osx_template.app/Contents/MacOS/
-          cp godot.osx.opt.64 osx_template.app/Contents/MacOS/
+          cp godot.osx.opt.64 godot_osx_release.64
+          cp godot.osx.opt.debug.64 godot_osx_debug.64
+          cp godot_osx_debug.64 osx_template.app/Contents/MacOS/
+          cp godot_osx_release.64 osx_template.app/Contents/MacOS/
           zip -r osx_3.3.4.stable_templates.zip osx_template.app/
 
       - uses: actions/upload-artifact@v2
