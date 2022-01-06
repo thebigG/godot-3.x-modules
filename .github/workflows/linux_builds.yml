@@ -104,13 +104,38 @@ jobs:
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 
+      # Execute unit tests for the editor
+      - name: Unit tests
+        if: ${{ matrix.tests }}
+        run: |
+          ${{ matrix.bin }} --test --headless
+
+      # Check class reference
+      - name: Check for class reference updates
+        if: ${{ matrix.doc-test }}
+        run: |
+          echo "Running --doctool to see if this changes the public API without updating the documentation."
+          echo -e "If a diff is shown, it means that your code/doc changes are incomplete and you should update the class reference with --doctool.\n\n"
+          ${{ matrix.bin }} --doctool --headless 2>&1 > /dev/null || true
+          git diff --color --exit-code && ! git ls-files --others --exclude-standard | sed -e 's/^/New doc file missing in PR: /' | grep 'xml$'
+
+      # Download, unzip and setup SwiftShader library
+      # See https://github.com/godotengine/regression-test-project/releases/tag/_ci-deps for details
+      - name: Download SwiftShader
+        if: ${{ matrix.tests }}
+        run: |
+          wget https://github.com/godotengine/regression-test-project/releases/download/_ci-deps/swiftshader-ubuntu20.04-20210728.zip
+          unzip swiftshader-ubuntu20.04-20210728.zip
+          curr="$(pwd)/libvk_swiftshader.so"
+          sed -i "s|PATH_TO_CHANGE|$curr|" vk_swiftshader_icd.json
+
       # Download and extract zip archive with project, folder is renamed to be able to easy change used project
       - name: Download test project
         if: ${{ matrix.test }}
         run: |
-          wget https://github.com/qarmin/RegressionTestProject/archive/3.x.zip
-          unzip 3.x.zip
-          mv "RegressionTestProject-3.x" "test_project"
+          wget https://github.com/godotengine/regression-test-project/archive/4.0.zip
+          unzip 4.0.zip
+          mv "regression-test-project-4.0" "test_project"
 
       # Editor is quite complicated piece of software, so it is easy to introduce bug here
       - name: Open and close editor
