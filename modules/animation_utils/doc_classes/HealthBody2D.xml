@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="BaseEnemy2D" inherits="KinematicBody2D" version="3.4">
+<class name="HealthBody2D" inherits="KinematicBody2D" version="3.3">
 	<brief_description>
 	</brief_description>
 	<description>
@@ -16,7 +16,7 @@
 	<members>
 		<member name="health" type="float" setter="" getter="get_health" default="1.0">
 		</member>
-		<member name="state" type="int" setter="" getter="get_state" enum="BaseEnemy2D.State" default="1">
+		<member name="state" type="int" setter="" getter="get_state" enum="HealthBody2D.State" default="1">
 		</member>
 	</members>
 	<constants>

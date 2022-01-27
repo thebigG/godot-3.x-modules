@@ -30,13 +30,13 @@
 
 #include "register_types.h"
 
-#include "base_enemy2d.h"
 #include "core/class_db.h"
 #include "core_utils.h"
+#include "health_body2d_copy.h"
 
 void register_animation_utils_types() {
 	ClassDB::register_class<AnimationUtils>();
-	ClassDB::register_class<BaseEnemy2D>();
+	ClassDB::register_class<HealthBody2D>();
 }
 
 void unregister_animation_utils_types() {

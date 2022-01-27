@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  base_enemy2d.h                                                       */
+/*  health_body2d.cpp                                                    */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,34 +28,37 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef BASEENEMY2D_H
-#define BASEENEMY2D_H
+#include "health_body2d_copy.h"
 
-#include "scene/2d/physics_body_2d.h"
-#include <iostream>
+HealthBody2D::HealthBody2D() :
+		health{ MAX_HEALTH }, state{ ALIVE }, damage_interval{ MAX_HEALTH } {}
 
-#define MAX_HEALTH 1
-#define ZERO_HEALTH 0
-#define DEFAULT_DAMAGE_INTERVAL 1
+real_t HealthBody2D::get_health() const {
+	return health;
+}
 
-class BaseEnemy2D : public KinematicBody2D {
-	GDCLASS(BaseEnemy2D, KinematicBody2D);
+HealthBody2D::State HealthBody2D::get_state() const {
+	return state;
+}
 
-public:
-	enum State { ALIVE = 1,
-		DEAD = 2 };
-	virtual void damage();
-	BaseEnemy2D();
-	real_t health; // value between 0 and 1
-	State state;
-	real_t get_health() const;
-	BaseEnemy2D::State get_state() const;
+void HealthBody2D::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("damage"), &HealthBody2D::damage);
+	ClassDB::bind_method(D_METHOD("get_health"), &HealthBody2D::get_health);
+	ClassDB::bind_method(D_METHOD("get_state"), &HealthBody2D::get_state);
 
-protected:
-	static void _bind_methods();
-	double damage_interval;
-};
+	ADD_PROPERTY(PropertyInfo(Variant::REAL, "health", PROPERTY_HINT_NONE), "", "get_health");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "state", PROPERTY_HINT_ENUM), "", "get_state");
 
-VARIANT_ENUM_CAST(BaseEnemy2D::State);
+	BIND_ENUM_CONSTANT(ALIVE);
+	BIND_ENUM_CONSTANT(DEAD);
+}
 
-#endif // BASEENEMY2D_H
+void HealthBody2D::damage() {
+	if (health <= ZERO_HEALTH) {
+		return;
+	}
+	health -= damage_interval;
+	if (health == ZERO_HEALTH) {
+		state = State::DEAD;
+	}
+}
