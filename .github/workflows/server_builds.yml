@@ -59,8 +59,8 @@ jobs:
         uses: ./.github/actions/godot-build
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
-        run: |
-          scons -j2 verbose=yes warnings=all werror=yes platform=server tools=yes target=release_debug module_mono_enabled=yes mono_glue=no
+#        run: |
+#          scons -j2 verbose=yes warnings=all werror=yes platform=server tools=yes target=release_debug module_mono_enabled=yes mono_glue=no
 
   linux-server:
     runs-on: "ubuntu-20.04"
