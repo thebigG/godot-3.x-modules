@@ -36,7 +36,7 @@ jobs:
             build-mono: false
             artifact: true
             publish-release: true
-            version: "3.3.4"
+            version: "3.4.2"
 
           - name: Editor and sanitizers (target=debug, tools=yes, use_asan=yes, use_ubsan=yes)
             cache-name: linux-editor-sanitizers
@@ -47,7 +47,8 @@ jobs:
             bin: "./bin/godot.x11.tools.64s"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
-            artifact: true
+            artifact: false
+
 
 #          - name: Template w/ Mono (target=release, tools=no)
 #            cache-name: linux-template-mono
