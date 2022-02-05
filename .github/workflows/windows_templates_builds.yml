@@ -8,6 +8,7 @@ env:
   SCONSFLAGS: platform=windows verbose=yes warnings=all werror=yes debug_symbols=no --jobs=2
   SCONS_CACHE_MSVC_CONFIG: true
   SCONS_CACHE_LIMIT: 4096
+  GODOT_MODULES_VERSION: 3.4.2
 
 jobs:
   windows-template:
@@ -79,7 +80,7 @@ jobs:
           cp windows_32_release.exe windows_templates/
           cp windows_64_release.exe windows_templates/
           cp windows_64_debug.exe windows_templates/
-          zip -r windows_3.3.4.stable_templates.zip windows_templates/
+          zip -r windows_${{env.GODOT_MODULES_VERSION}}.stable_templates.zip windows_templates/
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,8 +91,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/windows_3.3.4.stable_templates.zip
-          asset_name: windows_3.3.4.stable_templates.zip
+          file: bin/windows_${{env.GODOT_MODULES_VERSION}}.stable_templates.zip
+          asset_name: windows_${{env.GODOT_MODULES_VERSION}}.stable_templates.zip
           tag: Godot-continuous-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
