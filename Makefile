@@ -26,4 +26,4 @@ format:
 	./misc/scripts/clang_format.sh
 
 check_docs:
-	doc/tools/makerst.py --dry-run doc/classes modules
+	doc/tools/make_rst.py --dry-run doc/classes modules

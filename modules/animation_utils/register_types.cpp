@@ -32,7 +32,7 @@
 
 #include "core/class_db.h"
 #include "core_utils.h"
-#include "health_body2d_copy.h"
+#include "health_body2d.h"
 
 void register_animation_utils_types() {
 	ClassDB::register_class<AnimationUtils>();

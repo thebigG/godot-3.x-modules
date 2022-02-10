@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  health_body2d_copy.h                                                 */
+/*  health_body2d.h                                                      */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -34,8 +34,6 @@
 #include "scene/2d/physics_body_2d.h"
 #include <iostream>
 
-#define MAX_HEALTH 1
-#define ZERO_HEALTH 0
 #define DEFAULT_DAMAGE_INTERVAL 1
 
 class HealthBody2D : public KinematicBody2D {
@@ -44,12 +42,16 @@ class HealthBody2D : public KinematicBody2D {
 public:
 	enum State { ALIVE = 1,
 		DEAD = 2 };
+	const float MAX_HEALTH = 1;
+	const float ZERO_HEALTH = 0;
+
 	virtual void damage();
 	HealthBody2D();
 	real_t health; // value between 0 and 1
 	State state;
 	real_t get_health() const;
 	HealthBody2D::State get_state() const;
+	real_t get_damage_interval() const;
 
 protected:
 	static void _bind_methods();

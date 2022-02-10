@@ -28,13 +28,17 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "health_body2d_copy.h"
+#include "health_body2d.h"
 
 HealthBody2D::HealthBody2D() :
 		health{ MAX_HEALTH }, state{ ALIVE }, damage_interval{ MAX_HEALTH } {}
 
 real_t HealthBody2D::get_health() const {
 	return health;
+}
+
+real_t HealthBody2D::get_damage_interval() const {
+	return damage_interval;
 }
 
 HealthBody2D::State HealthBody2D::get_state() const {
@@ -45,9 +49,11 @@ void HealthBody2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("damage"), &HealthBody2D::damage);
 	ClassDB::bind_method(D_METHOD("get_health"), &HealthBody2D::get_health);
 	ClassDB::bind_method(D_METHOD("get_state"), &HealthBody2D::get_state);
+	ClassDB::bind_method(D_METHOD("get_damage_interval"), &HealthBody2D::get_damage_interval);
 
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "health", PROPERTY_HINT_NONE), "", "get_health");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "state", PROPERTY_HINT_ENUM), "", "get_state");
+	ADD_PROPERTY(PropertyInfo(Variant::REAL, "damage_interval", PROPERTY_HINT_NONE), "", "get_damage_interval");
 
 	BIND_ENUM_CONSTANT(ALIVE);
 	BIND_ENUM_CONSTANT(DEAD);
