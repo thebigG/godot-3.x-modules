@@ -14,7 +14,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="damage_interval" type="float" setter="" getter="get_damage_interval" default="1.0">
+		<member name="damage_interval" type="float" setter="set_damage_interval" getter="get_damage_interval" default="1.0">
 		</member>
 		<member name="health" type="float" setter="" getter="get_health" default="1.0">
 		</member>

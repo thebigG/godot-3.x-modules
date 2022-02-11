@@ -55,6 +55,7 @@ public:
 
 protected:
 	static void _bind_methods();
+	void set_damage_interval(real_t new_interval);
 	double damage_interval;
 };
 

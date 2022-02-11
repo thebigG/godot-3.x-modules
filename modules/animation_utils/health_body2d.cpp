@@ -45,15 +45,20 @@ HealthBody2D::State HealthBody2D::get_state() const {
 	return state;
 }
 
+void HealthBody2D::set_damage_interval(real_t new_interval) {
+	damage_interval = new_interval;
+}
+
 void HealthBody2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("damage"), &HealthBody2D::damage);
 	ClassDB::bind_method(D_METHOD("get_health"), &HealthBody2D::get_health);
 	ClassDB::bind_method(D_METHOD("get_state"), &HealthBody2D::get_state);
 	ClassDB::bind_method(D_METHOD("get_damage_interval"), &HealthBody2D::get_damage_interval);
+	ClassDB::bind_method(D_METHOD("set_damage_interval"), &HealthBody2D::set_damage_interval);
 
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "health", PROPERTY_HINT_NONE), "", "get_health");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "state", PROPERTY_HINT_ENUM), "", "get_state");
-	ADD_PROPERTY(PropertyInfo(Variant::REAL, "damage_interval", PROPERTY_HINT_NONE), "", "get_damage_interval");
+	ADD_PROPERTY(PropertyInfo(Variant::REAL, "damage_interval", PROPERTY_HINT_NONE), "set_damage_interval", "get_damage_interval");
 
 	BIND_ENUM_CONSTANT(ALIVE);
 	BIND_ENUM_CONSTANT(DEAD);
