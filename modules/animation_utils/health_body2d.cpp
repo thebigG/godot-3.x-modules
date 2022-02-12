@@ -69,7 +69,7 @@ void HealthBody2D::damage() {
 		return;
 	}
 	health -= damage_interval;
-	if (health == ZERO_HEALTH) {
+	if (health <= ZERO_HEALTH) {
 		state = State::DEAD;
 	}
 }
