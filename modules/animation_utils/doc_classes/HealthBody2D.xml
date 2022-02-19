@@ -14,6 +14,10 @@
 		</method>
 	</methods>
 	<members>
+		<member name="MAX_HEALTH" type="float" setter="" getter="get_max_health" default="1.0">
+		</member>
+		<member name="ZERO_HEALTH" type="float" setter="" getter="get_zero_health" default="0.0">
+		</member>
 		<member name="damage_interval" type="float" setter="set_damage_interval" getter="get_damage_interval" default="1.0">
 		</member>
 		<member name="health" type="float" setter="" getter="get_health" default="1.0">

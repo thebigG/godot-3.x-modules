@@ -42,14 +42,16 @@ class HealthBody2D : public KinematicBody2D {
 public:
 	enum State { ALIVE = 1,
 		DEAD = 2 };
-	const float MAX_HEALTH = 1;
-	const float ZERO_HEALTH = 0;
+	const real_t MAX_HEALTH = 1;
+	const real_t ZERO_HEALTH = 0;
 
 	virtual void damage();
 	HealthBody2D();
+	real_t get_max_health() const;
 	real_t health; // value between 0 and 1
 	State state;
 	real_t get_health() const;
+	real_t get_zero_health() const;
 	HealthBody2D::State get_state() const;
 	real_t get_damage_interval() const;
 

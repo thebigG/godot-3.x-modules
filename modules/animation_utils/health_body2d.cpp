@@ -41,6 +41,14 @@ real_t HealthBody2D::get_damage_interval() const {
 	return damage_interval;
 }
 
+real_t HealthBody2D::get_max_health() const {
+	return MAX_HEALTH;
+}
+
+real_t HealthBody2D::get_zero_health() const {
+	return ZERO_HEALTH;
+}
+
 HealthBody2D::State HealthBody2D::get_state() const {
 	return state;
 }
@@ -52,6 +60,8 @@ void HealthBody2D::set_damage_interval(real_t new_interval) {
 void HealthBody2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("damage"), &HealthBody2D::damage);
 	ClassDB::bind_method(D_METHOD("get_health"), &HealthBody2D::get_health);
+	ClassDB::bind_method(D_METHOD("get_max_health"), &HealthBody2D::get_max_health);
+	ClassDB::bind_method(D_METHOD("get_zero_health"), &HealthBody2D::get_zero_health);
 	ClassDB::bind_method(D_METHOD("get_state"), &HealthBody2D::get_state);
 	ClassDB::bind_method(D_METHOD("get_damage_interval"), &HealthBody2D::get_damage_interval);
 	ClassDB::bind_method(D_METHOD("set_damage_interval"), &HealthBody2D::set_damage_interval);
@@ -59,6 +69,8 @@ void HealthBody2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "health", PROPERTY_HINT_NONE), "", "get_health");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "state", PROPERTY_HINT_ENUM), "", "get_state");
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "damage_interval", PROPERTY_HINT_NONE), "set_damage_interval", "get_damage_interval");
+	ADD_PROPERTY(PropertyInfo(Variant::REAL, "MAX_HEALTH", PROPERTY_HINT_NONE), "", "get_max_health");
+	ADD_PROPERTY(PropertyInfo(Variant::REAL, "ZERO_HEALTH", PROPERTY_HINT_NONE), "", "get_zero_health");
 
 	BIND_ENUM_CONSTANT(ALIVE);
 	BIND_ENUM_CONSTANT(DEAD);
