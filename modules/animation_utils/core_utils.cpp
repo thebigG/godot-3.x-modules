@@ -48,6 +48,11 @@ void AnimationUtils::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_total"), &AnimationUtils::get_total);
 	ClassDB::bind_method(D_METHOD("get_animation"), &AnimationUtils::get_animation);
 	ClassDB::bind_method(D_METHOD("get_node"), &AnimationUtils::get_node);
+
+	//TODO:The following is not compiling..
+	//	ClassDB::bind_method(D_METHOD("h_line_pattern", "path", "origin", "length"), &AnimationUtils::h_line_pattern);
+	//	ClassDB::bind_method(D_METHOD("v_line_pattern"), &AnimationUtils::v_line_pattern);
+	//	ClassDB::bind_method(D_METHOD("hz_line_pattern"), &AnimationUtils::v_line_pattern);
 }
 
 AnimationUtils::AnimationUtils() {
@@ -91,3 +96,48 @@ Node *AnimationUtils::get_node() {
 	node = std::make_unique<Node>();
 	return node.get();
 }
+
+Vector2 AnimationUtils::h_line_pattern(const Curve2D &path, Vector2 origin, int length) {
+	Vector2 target = Vector2{ origin.x + length, origin.y };
+	//	curve
+	//	path.add_point(origin,
+	//						 Vector2(0,0),
+	//						Vector2(0,0));
+	//	path.add_point(target,
+	//						Vector2(0,0),
+	//						Vector2(0, 0));
+	return target;
+}
+
+//Vector2 AnimationUtils::v_line_pattern(Curve2D path,Vector2 origin,  int length){
+//	Vector2 target = Vector2{origin.x, origin.y + length};
+//	path.add_point(origin,
+//						 Vector2(0,0),
+//						Vector2(0,0));
+//	path.add_point(target,
+//						Vector2(0,0),
+//						Vector2(0, 0));
+//	return target;
+//}
+
+//Vector2 AnimationUtils::hz_line_pattern(Curve2D path,Vector2 origin, int length, HZ_MODE mode)
+//{
+//	Vector2 target = Vector2(origin.x + length, origin.y + length);
+//	switch(mode)
+//	{
+//		case HZ_MODE::DOWN:
+//			target = Vector2(origin.x + length, origin.y + length);
+//			break;
+//		case HZ_MODE::UP:
+//			target = Vector2(origin.x + length, origin.y - length);
+//			break;
+//	}
+//	path.add_point(origin,
+//					Vector2(0,0),
+//					Vector2(0, 0));
+//	path.add_point(target,
+//						Vector2(0,0),
+//						Vector2(0,0));
+
+//	return target;
+//}

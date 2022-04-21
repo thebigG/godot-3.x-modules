@@ -33,10 +33,13 @@
 
 #include "core/os/memory.h"
 #include "core/reference.h"
+#include "scene/2d/path_2d.h"
 #include "scene/main/node.h"
 #include "scene/resources/animation.h"
 #include <memory>
 
+enum class HZ_MODE { UP,
+	DOWN };
 class AnimationUtils : public Reference {
 	GDCLASS(AnimationUtils, Reference);
 	int count;
@@ -52,6 +55,10 @@ public:
 	std::unique_ptr<Node> node;
 	//TODO:This function really should be static...
 	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
+	Vector2 h_line_pattern(const Curve2D &path, Vector2 origin, int length);
+	//	Vector2 v_line_pattern(Curve2D path,Vector2 origin,  int length);
+
+	//	Vector2 hz_line_pattern(Curve2D path,Vector2 origin,  int length);
 	Node *get_node();
 	AnimationUtils();
 };
