@@ -38,8 +38,7 @@
 #include "scene/resources/animation.h"
 #include <memory>
 
-enum class HZ_MODE { UP,
-	DOWN };
+//TODO: I should make AnimationUtils a singleton
 class AnimationUtils : public Reference {
 	GDCLASS(AnimationUtils, Reference);
 	int count;
@@ -48,6 +47,8 @@ protected:
 	static void _bind_methods();
 
 public:
+	enum HZ_MODE { UP = 1,
+		DOWN = 2 };
 	void add(int p_value);
 	void reset();
 	int get_total() const;
@@ -55,12 +56,14 @@ public:
 	std::unique_ptr<Node> node;
 	//TODO:This function really should be static...
 	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
-	Vector2 h_line_pattern(const Curve2D &path, Vector2 origin, int length);
-	//	Vector2 v_line_pattern(Curve2D path,Vector2 origin,  int length);
+	Vector2 h_line_pattern(Ref<Curve2D> path, Vector2 origin, int length);
+	Vector2 v_line_pattern(Ref<Curve2D> path, Vector2 origin, int length);
+	Vector2 hz_line_pattern(Ref<Curve2D> path, Vector2 origin, int length, HZ_MODE mode);
+	Vector2 rectangle_pattern(Ref<Curve2D> path, Vector2 origin, int width, int height);
 
 	//	Vector2 hz_line_pattern(Curve2D path,Vector2 origin,  int length);
 	Node *get_node();
 	AnimationUtils();
 };
-
+VARIANT_ENUM_CAST(AnimationUtils::HZ_MODE);
 #endif // CORE_UTILS_H
