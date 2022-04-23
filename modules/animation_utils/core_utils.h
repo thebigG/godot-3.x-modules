@@ -59,6 +59,7 @@ public:
 	Vector2 h_line_pattern(Ref<Curve2D> path, Vector2 origin, int length);
 	Vector2 v_line_pattern(Ref<Curve2D> path, Vector2 origin, int length);
 	Vector2 hz_line_pattern(Ref<Curve2D> path, Vector2 origin, int length, HZ_MODE mode);
+	Vector2 zig_zag_pattern(Ref<Curve2D> path, Vector2 origin, int width, int height);
 	Vector2 rectangle_pattern(Ref<Curve2D> path, Vector2 origin, int width, int height);
 
 	//	Vector2 hz_line_pattern(Curve2D path,Vector2 origin,  int length);

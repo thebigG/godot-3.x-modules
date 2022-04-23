@@ -54,6 +54,7 @@ void AnimationUtils::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("v_line_pattern"), &AnimationUtils::v_line_pattern);
 	ClassDB::bind_method(D_METHOD("hz_line_pattern"), &AnimationUtils::hz_line_pattern);
 	ClassDB::bind_method(D_METHOD("rectangle_pattern"), &AnimationUtils::rectangle_pattern);
+	ClassDB::bind_method(D_METHOD("zig_zag_pattern"), &AnimationUtils::zig_zag_pattern);
 	BIND_ENUM_CONSTANT(UP);
 	BIND_ENUM_CONSTANT(DOWN);
 }
@@ -156,4 +157,17 @@ Vector2 AnimationUtils::rectangle_pattern(Ref<Curve2D> path, Vector2 origin, int
 							height),
 					-width),
 			-height);
+}
+
+Vector2 AnimationUtils::zig_zag_pattern(Ref<Curve2D> path, Vector2 origin, int length, int zigs) {
+	Vector2 last_origin = origin;
+	for (auto zig = 0; zig < zigs; zig++) {
+		if (zig % 2 == 0) {
+			last_origin = hz_line_pattern(path, last_origin, length, HZ_MODE::DOWN);
+		} else {
+			last_origin = hz_line_pattern(path, last_origin, length, HZ_MODE::UP);
+		}
+	}
+
+	return last_origin;
 }
