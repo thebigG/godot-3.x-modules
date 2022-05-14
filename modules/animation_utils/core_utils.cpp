@@ -46,14 +46,14 @@ void AnimationUtils::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add", "value"), &AnimationUtils::add);
 	ClassDB::bind_method(D_METHOD("reset"), &AnimationUtils::reset);
 	ClassDB::bind_method(D_METHOD("get_total"), &AnimationUtils::get_total);
-	ClassDB::bind_method(D_METHOD("get_animation"), &AnimationUtils::get_animation);
+	ClassDB::bind_method(D_METHOD("get_animation", "node_path", "text", "delimeter"), &AnimationUtils::get_animation);
 
 	//TODO:The following is not compiling..
-	ClassDB::bind_method(D_METHOD("h_line_pattern"), &AnimationUtils::h_line_pattern);
-	ClassDB::bind_method(D_METHOD("v_line_pattern"), &AnimationUtils::v_line_pattern);
-	ClassDB::bind_method(D_METHOD("hz_line_pattern"), &AnimationUtils::hz_line_pattern);
-	ClassDB::bind_method(D_METHOD("rectangle_pattern"), &AnimationUtils::rectangle_pattern);
-	ClassDB::bind_method(D_METHOD("zig_zag_pattern"), &AnimationUtils::zig_zag_pattern);
+	ClassDB::bind_method(D_METHOD("h_line_pattern", "path", "origin", "length"), &AnimationUtils::h_line_pattern);
+	ClassDB::bind_method(D_METHOD("v_line_pattern", "path", "origin", "length"), &AnimationUtils::v_line_pattern);
+	ClassDB::bind_method(D_METHOD("hz_line_pattern", "path", "origin", "length", "mode"), &AnimationUtils::hz_line_pattern);
+	ClassDB::bind_method(D_METHOD("rectangle_pattern", "path", "origin", "width", "height"), &AnimationUtils::rectangle_pattern);
+	ClassDB::bind_method(D_METHOD("zig_zag_pattern", "path", "origin", "length", "zigs"), &AnimationUtils::zig_zag_pattern);
 	BIND_ENUM_CONSTANT(UP);
 	BIND_ENUM_CONSTANT(DOWN);
 }
@@ -91,6 +91,14 @@ Ref<Animation> AnimationUtils::get_animation(NodePath node_path, String text, St
 	return animation;
 }
 
+/**
+ * @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+ * that starts at origin that is length long.
+ * @param path
+ * @param origin
+ * @param length
+ * @return The last point that was added to curve.
+ */
 Vector2 AnimationUtils::h_line_pattern(Ref<Curve2D> path, Vector2 origin, int length) {
 	Vector2 target = Vector2{ origin.x + length, origin.y };
 	path->add_point(origin,

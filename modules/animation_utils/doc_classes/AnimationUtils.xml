@@ -15,9 +15,9 @@
 		</method>
 		<method name="get_animation">
 			<return type="Animation" />
-			<argument index="0" name="arg0" type="NodePath" />
-			<argument index="1" name="arg1" type="String" />
-			<argument index="2" name="arg2" type="String" />
+			<argument index="0" name="node_path" type="NodePath" />
+			<argument index="1" name="text" type="String" />
+			<argument index="2" name="delimeter" type="String" />
 			<description>
 			</description>
 		</method>
@@ -28,27 +28,27 @@
 		</method>
 		<method name="h_line_pattern">
 			<return type="Vector2" />
-			<argument index="0" name="arg0" type="Curve2D" />
-			<argument index="1" name="arg1" type="Vector2" />
-			<argument index="2" name="arg2" type="int" />
+			<argument index="0" name="path" type="Curve2D" />
+			<argument index="1" name="origin" type="Vector2" />
+			<argument index="2" name="length" type="int" />
 			<description>
 			</description>
 		</method>
 		<method name="hz_line_pattern">
 			<return type="Vector2" />
-			<argument index="0" name="arg0" type="Curve2D" />
-			<argument index="1" name="arg1" type="Vector2" />
-			<argument index="2" name="arg2" type="int" />
-			<argument index="3" name="arg3" type="int" enum="AnimationUtils.HZ_MODE" />
+			<argument index="0" name="path" type="Curve2D" />
+			<argument index="1" name="origin" type="Vector2" />
+			<argument index="2" name="length" type="int" />
+			<argument index="3" name="mode" type="int" enum="AnimationUtils.HZ_MODE" />
 			<description>
 			</description>
 		</method>
 		<method name="rectangle_pattern">
 			<return type="Vector2" />
-			<argument index="0" name="arg0" type="Curve2D" />
-			<argument index="1" name="arg1" type="Vector2" />
-			<argument index="2" name="arg2" type="int" />
-			<argument index="3" name="arg3" type="int" />
+			<argument index="0" name="path" type="Curve2D" />
+			<argument index="1" name="origin" type="Vector2" />
+			<argument index="2" name="width" type="int" />
+			<argument index="3" name="height" type="int" />
 			<description>
 			</description>
 		</method>
@@ -59,18 +59,18 @@
 		</method>
 		<method name="v_line_pattern">
 			<return type="Vector2" />
-			<argument index="0" name="arg0" type="Curve2D" />
-			<argument index="1" name="arg1" type="Vector2" />
-			<argument index="2" name="arg2" type="int" />
+			<argument index="0" name="path" type="Curve2D" />
+			<argument index="1" name="origin" type="Vector2" />
+			<argument index="2" name="length" type="int" />
 			<description>
 			</description>
 		</method>
 		<method name="zig_zag_pattern">
 			<return type="Vector2" />
-			<argument index="0" name="arg0" type="Curve2D" />
-			<argument index="1" name="arg1" type="Vector2" />
-			<argument index="2" name="arg2" type="int" />
-			<argument index="3" name="arg3" type="int" />
+			<argument index="0" name="path" type="Curve2D" />
+			<argument index="1" name="origin" type="Vector2" />
+			<argument index="2" name="length" type="int" />
+			<argument index="3" name="zigs" type="int" />
 			<description>
 			</description>
 		</method>
