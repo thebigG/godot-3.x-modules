@@ -53,7 +53,6 @@ public:
 	void reset();
 	int get_total() const;
 	Ref<Animation> animation;
-	std::unique_ptr<Node> node;
 	//TODO:This function really should be static...
 	Ref<Animation> get_animation(NodePath node_path, String text, String delimeter = " ");
 	Vector2 h_line_pattern(Ref<Curve2D> path, Vector2 origin, int length);
@@ -63,7 +62,6 @@ public:
 	Vector2 rectangle_pattern(Ref<Curve2D> path, Vector2 origin, int width, int height);
 
 	//	Vector2 hz_line_pattern(Curve2D path,Vector2 origin,  int length);
-	Node *get_node();
 	AnimationUtils();
 };
 VARIANT_ENUM_CAST(AnimationUtils::HZ_MODE);

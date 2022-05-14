@@ -47,7 +47,6 @@ void AnimationUtils::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("reset"), &AnimationUtils::reset);
 	ClassDB::bind_method(D_METHOD("get_total"), &AnimationUtils::get_total);
 	ClassDB::bind_method(D_METHOD("get_animation"), &AnimationUtils::get_animation);
-	ClassDB::bind_method(D_METHOD("get_node"), &AnimationUtils::get_node);
 
 	//TODO:The following is not compiling..
 	ClassDB::bind_method(D_METHOD("h_line_pattern"), &AnimationUtils::h_line_pattern);
@@ -90,15 +89,6 @@ Ref<Animation> AnimationUtils::get_animation(NodePath node_path, String text, St
 	}
 
 	return animation;
-}
-
-/**
- * @brief Summator::get_node
- * @return
- */
-Node *AnimationUtils::get_node() {
-	node = std::make_unique<Node>();
-	return node.get();
 }
 
 Vector2 AnimationUtils::h_line_pattern(Ref<Curve2D> path, Vector2 origin, int length) {

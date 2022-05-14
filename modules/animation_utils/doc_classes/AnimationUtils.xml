@@ -21,11 +21,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="get_node">
-			<return type="Node" />
-			<description>
-			</description>
-		</method>
 		<method name="get_total" qualifiers="const">
 			<return type="int" />
 			<description>
