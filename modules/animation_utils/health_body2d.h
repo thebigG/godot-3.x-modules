@@ -32,7 +32,6 @@
 #define BASEENEMY2D_H
 
 #include "scene/2d/physics_body_2d.h"
-#include <iostream>
 
 #define DEFAULT_DAMAGE_INTERVAL 1
 

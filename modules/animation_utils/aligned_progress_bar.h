@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  aligned_progress_bar.h                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,19 +28,26 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
+#ifndef ALIGNED_PROGRESS_BAR_H
+#define ALIGNED_PROGRESS_BAR_H
 
-#include "core/class_db.h"
-#include "modules/animation_utils/aligned_progress_bar.h"
-#include "modules/animation_utils/core_utils.h"
-#include "modules/animation_utils/health_body2d.h"
+#include "scene/gui/progress_bar.h"
+#include "scene/gui/range.h"
 
-void register_animation_utils_types() {
-	ClassDB::register_class<AnimationUtils>();
-	ClassDB::register_class<HealthBody2D>();
-	ClassDB::register_class<AlignedProgressBar>();
-}
+class AlignedProgressBar : public ProgressBar {
+	GDCLASS(AlignedProgressBar, ProgressBar);
 
-void unregister_animation_utils_types() {
-	// Nothing to do here in this example.
-}
+protected:
+	static void _bind_methods();
+	void _notification(int p_what);
+
+public:
+	void set_alignment(HAlign new_alignment);
+	HAlign get_alignment() const;
+
+	HAlign alignment;
+
+	AlignedProgressBar();
+};
+
+#endif // ALIGNED_PROGRESS_BAR_H

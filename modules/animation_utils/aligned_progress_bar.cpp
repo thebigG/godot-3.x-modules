@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  aligned_progress_bar.cpp                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,19 +28,44 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
+#include "aligned_progress_bar.h"
+void AlignedProgressBar::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("get_alignment"), &AlignedProgressBar::get_alignment);
+	ClassDB::bind_method(D_METHOD("set_alignment"), &AlignedProgressBar::set_alignment);
 
-#include "core/class_db.h"
-#include "modules/animation_utils/aligned_progress_bar.h"
-#include "modules/animation_utils/core_utils.h"
-#include "modules/animation_utils/health_body2d.h"
-
-void register_animation_utils_types() {
-	ClassDB::register_class<AnimationUtils>();
-	ClassDB::register_class<HealthBody2D>();
-	ClassDB::register_class<AlignedProgressBar>();
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "alignment", PROPERTY_HINT_ENUM), "set_alignment", "get_alignment");
 }
 
-void unregister_animation_utils_types() {
-	// Nothing to do here in this example.
+void AlignedProgressBar::_notification(int p_what) {
+	if (p_what == NOTIFICATION_DRAW) {
+		Ref<StyleBox> bg = get_stylebox("bg");
+		Ref<StyleBox> fg = get_stylebox("fg");
+		Ref<Font> font = get_font("font");
+		Color font_color = get_color("font_color");
+
+		draw_style_box(bg, Rect2(Point2(), get_size()));
+		float r = get_as_ratio();
+		int mp = fg->get_minimum_size().width;
+		int p = r * (get_size().width - mp);
+		if (p > 0) {
+			draw_style_box(fg, Rect2(Point2(), Size2(p + fg->get_minimum_size().width, get_size().height)));
+		}
+
+		if (is_percent_visible()) {
+			String txt = itos(int(get_as_ratio() * 100)) + "%";
+			font->draw_halign(get_canvas_item(), Point2(0, font->get_ascent() + (get_size().height - font->get_height()) / 2), alignment, get_size().width, txt, font_color);
+		}
+	}
+}
+
+AlignedProgressBar::AlignedProgressBar() {
+	alignment = HALIGN_CENTER;
+}
+
+HAlign AlignedProgressBar::get_alignment() const {
+	return alignment;
+}
+
+void AlignedProgressBar::set_alignment(HAlign new_alignment) {
+	alignment = new_alignment;
 }
