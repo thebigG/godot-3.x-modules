@@ -12,6 +12,14 @@ linux-server:
 linux-server-tools:
 	scons -j${CORES} platform=server tools=yes target=release_debug
 
+
+javascript-release-debug:
+	scons platform=javascript tools=no target=release_debug
+
+javascript-release:
+	scons platform=javascript tools=no target=release
+
+
 docs:
 	./bin/godot.x11.tools.64 --doctool .
 

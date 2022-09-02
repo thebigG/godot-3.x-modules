@@ -7,6 +7,7 @@ env:
   SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no
   EM_VERSION: 2.0.25
   EM_CACHE_FOLDER: "emsdk-cache"
+  GODOT_MODULES_VERSION: 3.4.2
 
 concurrency:
   group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-javascript
@@ -55,3 +56,13 @@ jobs:
 
       - name: Upload artifact
         uses: ./.github/actions/upload-artifact
+
+      - name: Upload templates to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./bin/godot.javascript.opt.zip
+          asset_name: javascript_${{env.GODOT_MODULES_VERSION}}.stable_templates.zip
+          tag: Godot-continuous-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
